@@ -9,11 +9,20 @@ import Busca from '../Screens/Busca';
 export const Tabs = TabNavigator({
     Recomendacao: {
         screen: Recomendacao,
+        navigationOptions: {
+            tabBarLabel:'Home'
+        },
     },
     Adicionados: {
         screen: Adicionados,
+        navigationOptions: {
+            tabBarLabel : 'Lista'
+        },
     },
     Busca: {
         screen: Busca,
+        navigationOptions: {
+            tabBarLabel : 'Buscar'
+        }
     },
 });
