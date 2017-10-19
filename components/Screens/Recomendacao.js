@@ -1,58 +1,44 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, ListView, StyleSheet } from 'react-native';
+import { FlatList, AppRegistry, Text, View, ListView, StyleSheet } from 'react-native';
 
 export default class Recomendacao extends Component<{}> {
-    constructor(){
-        super();
-        const ms = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            movieDataSource: ms,
-        };
-    }
+    state = {
+        data: []
+    }    
 
-    fetchMovies(){
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=6abb71108d7275bf8fea16bd041e6c31&language=pt-BR&page=1')
-            .then((response) => response.json())
-            .then((response) => {
-                this.setState({
-                    movieDataSource: this.state.movieDataSource.cloneWithRows(response)
-                });
-            });
-    }
+    fetchMovies = async () => {
+        const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=6abb71108d7275bf8fea16bd041e6c31&language=pt-BR&page=1')
+        const json = await response.json();
+        this.setState({ data: json.results});
+    };
 
     render() {
       return (
-        // <Text> Pagina inicial. Recomendar filmes segundo algum criterio </Text>
-        <ListView 
-            dataSource={this.state.movieDataSource}
-            renderRow={this.renderRow.bind(this)}
-        />
+        <View style={styles.container}>
+            <FlatList
+                data={this.state.data}
+                keyExtractor={(x,i) => i}
+                renderItem={({ item }) => 
+                    <Text>
+                        {`${item.title} - ${item.overview}\n`}
+                    </Text>
+                }
+            />
+        </View>
       );
     }
 
-    componentDidMount(){
+    componentWillMount(){
         this.fetchMovies();
-    }
-
-
-    renderRow(movie, sectionId, rowId, highlightRow){
-        return(
-            <View style={styles.row}>
-                <Text style={styles.rowText}>{rowId}</Text>
-            </View>
-        )
     }
 }
 
 const styles = StyleSheet.create({
-  row: {
-      flexDirection:'row',
+  container: {
+      flex:1,
       justifyContent:'center',
       padding:10,
       backgroundColor: '#f4f4f4',
-      marginBottom:3
+      marginTop:3
   },
-  rowText: {
-      flex:1
-  }
 });
