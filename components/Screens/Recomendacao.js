@@ -20,7 +20,13 @@ export default class Recomendacao extends Component<{}> {
                 keyExtractor={(x,i) => i}
                 renderItem={({ item }) => 
                     <Text>
-                        {`${item.title} - ${item.overview}\n`}
+                        <Text style={styles.titulo}>
+                        {`  ${item.title} `}
+                        </Text>
+
+                        <Text style={styles.sinopse}>
+                        {` - ${item.overview}\n `}
+                        </Text>
                     </Text>
                 }
             />
@@ -41,4 +47,19 @@ const styles = StyleSheet.create({
       backgroundColor: '#f4f4f4',
       marginTop:3
   },
+  titulo:
+  {
+    flex: 1,
+    flexDirection: 'row',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  sinopse:
+  {
+    flex: 1,
+    flexDirection: 'row',
+    fontSize: 15,
+    textAlign: 'left',
+  }
 });
