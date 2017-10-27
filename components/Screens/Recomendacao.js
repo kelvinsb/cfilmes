@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, AppRegistry, Text, View, ListView, StyleSheet } from 'react-native';
+import { FlatList, AppRegistry, Text, View, ListView, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default class Recomendacao extends Component<{}> {
     state = {
@@ -24,6 +24,7 @@ export default class Recomendacao extends Component<{}> {
                         {`  ${item.title} `}
                         </Text>
 
+                         
                         <Text style={styles.sinopse}>
                         {` - ${item.overview}\n `}
                         </Text>
