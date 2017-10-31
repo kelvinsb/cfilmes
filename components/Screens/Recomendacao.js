@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, AppRegistry, Text, View, ListView, StyleSheet, TouchableHighlight } from 'react-native';
+import { FlatList, AppRegistry, Text, View, ListView, StyleSheet, TouchableHighlight, Image } from 'react-native';
 
 export default class Recomendacao extends Component<{}> {
     state = {
@@ -20,13 +20,17 @@ export default class Recomendacao extends Component<{}> {
                 keyExtractor={(x,i) => i}
                 renderItem={({ item }) => 
                     <Text>
+                        <Image
+                            style = {styles.image}
+                            source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
+                        />
                         <Text style={styles.titulo}>
                         {`  ${item.title} `}
                         </Text>
 
                          
                         <Text style={styles.sinopse}>
-                        {` - ${item.overview}\n `}
+                        {` - ${item.overview}\n\n `}
                         </Text>
                     </Text>
                 }
@@ -62,5 +66,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontSize: 15,
     textAlign: 'left',
+  },
+  image:
+  {
+    width: 1100,
+    height: 1100
   }
 });

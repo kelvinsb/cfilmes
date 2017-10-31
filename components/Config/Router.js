@@ -14,17 +14,17 @@ export const Tabs = TabNavigator({
             tabBarLabel:'Home'
         },
     },
-    Adicionados: {
-        screen: Adicionados,
-        navigationOptions: {
-            tabBarLabel : 'Lista'
-        },
-    },
     Busca: {
         screen: Busca,
         navigationOptions: {
             tabBarLabel : 'Buscar'
         }
+    },
+    Adicionados: {
+        screen: Adicionados,
+        navigationOptions: {
+            tabBarLabel : 'Lista'
+        },
     },
     Filme: {
         screen: Filme,

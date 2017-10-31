@@ -38,11 +38,11 @@ export default class Busca extends Component<{}> {
 
   render() {
     return (
-      <View>
-        <Image
+      <View style={styles.container}>
+        {/* <Image
           style = {styles.image}
-          source = {{uri: 'https://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg'}}
-        />
+          source = {{uri: 'https://image.tmdb.org/t/p/original/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg'}}
+        /> */}
         <TextInput
           placeholder="Buscar..."
           value={this.state.value}
@@ -66,7 +66,7 @@ export default class Busca extends Component<{}> {
                 source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
                 />
                 <Text style={styles.titulo}>
-                {`${item.title}\n`}
+                {`\n${item.title}\n`}
                 </Text>  
 
                 <Text style={styles.sinopse}>
@@ -82,7 +82,7 @@ export default class Busca extends Component<{}> {
                 </Text>
                           
                 <Text style={styles.sinopse}>
-                {` - ${item.overview}\n `}
+                {` Sinopse: ${item.overview}\n\n\n `}
                 </Text>
               </Text>
               </TouchableOpacity>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image:
   {
-    width: 400,
-    height: 200
+    width: 1100,
+    height: 1100
   }
 });
