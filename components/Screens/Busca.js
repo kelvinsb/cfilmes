@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, StyleSheet, FlatList, Image} from 'react-native';
+import { Text, TextInput, View, StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native';
 
 export default class Busca extends Component<{}> {
   constructor(props){
@@ -16,6 +16,11 @@ export default class Busca extends Component<{}> {
   static defaultProps = {
     value : ''
   }
+  
+  _onPress = () => {
+    // your code on item press
+ };
+
 
   onChangeText(value){
     this.setState({value: value});
@@ -54,33 +59,33 @@ export default class Busca extends Component<{}> {
           data={this.state.data}
           keyExtractor={(x,i) => i}
           renderItem={({ item }) => 
-            <Text>
-              <Image source={{uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`}} />
-              <Image
+            <TouchableOpacity onPress={this._onPress}>
+              <Text>
+                <Image
                 style = {styles.image}
-                source={{uri: `https://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg`}}
-              />
+                source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
+                />
+                <Text style={styles.titulo}>
+                {`${item.title}\n`}
+                </Text>  
 
-              <Text style={styles.titulo}>
-              {`${item.title}\n`}
-              </Text>  
+                <Text style={styles.sinopse}>
+                {`Nota: ${item.vote_average}\n`}
+                </Text>
 
-              <Text style={styles.sinopse}>
-              {`Nota: ${item.vote_average}\n`}
-              </Text>
+                <Text style={styles.sinopse}>
+                {`Titulo Original: ${item.original_title}\n`}
+                </Text>
 
-              <Text style={styles.sinopse}>
-              {`Titulo Original: ${item.original_title}\n`}
+                <Text style={styles.sinopse}>
+                {`Data de lancamento: ${item.release_date}\n`}
+                </Text>
+                          
+                <Text style={styles.sinopse}>
+                {` - ${item.overview}\n `}
+                </Text>
               </Text>
-
-              <Text style={styles.sinopse}>
-              {`Data de lancamento: ${item.release_date}\n`}
-              </Text>
-                         
-              <Text style={styles.sinopse}>
-              {` - ${item.overview}\n `}
-              </Text>
-            </Text>
+              </TouchableOpacity>
           }
         />
 
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image:
   {
-    width: 200,
+    width: 400,
     height: 200
   }
 });
