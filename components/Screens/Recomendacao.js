@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, AppRegistry, Text, View, ListView, StyleSheet, TouchableHighlight, Image } from 'react-native';
+import { FlatList, AppRegistry, Text, View, ListView, StyleSheet, TouchableHighlight, TouchableOpacity, Image } from 'react-native';
 
 export default class Recomendacao extends Component<{}> {
     state = {
@@ -19,20 +19,22 @@ export default class Recomendacao extends Component<{}> {
                 data={this.state.data}
                 keyExtractor={(x,i) => i}
                 renderItem={({ item }) => 
-                    <Text>
-                        <Image
-                            style = {styles.image}
-                            source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
-                        />
+                    <View style={styles.container}>
+                        <TouchableOpacity onPress={this._onPress} onPress={() => this.props.navigation.navigate('Detalhes', {item})} >
+                            <Image
+                                style = {styles.image}
+                                source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
+                            />
+                        </TouchableOpacity>
                         <Text style={styles.titulo}>
-                        {`  ${item.title} `}
+                        {`  ${item.title} \n\n`}
                         </Text>
 
                          
-                        <Text style={styles.sinopse}>
+                        {/* <Text style={styles.sinopse}>
                         {` - ${item.overview}\n\n `}
-                        </Text>
-                    </Text>
+                        </Text> */}
+                    </View>
                 }
             />
         </View>
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
   },
   image:
   {
-    width: 1100,
-    height: 1100
+    width: 350,
+    height: 550
   }
 });

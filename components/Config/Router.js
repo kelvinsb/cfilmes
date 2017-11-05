@@ -6,13 +6,14 @@ import Recomendacao from '../Screens/Recomendacao';
 import Adicionados from '../Screens/Adicionados';
 import Busca from '../Screens/Busca';
 import Filme from '../Screens/Filme';
+import Detalhes from '../Screens/Detalhes';
 
 export const Tabs = TabNavigator({
     Recomendacao: {
-        screen: Recomendacao,
         navigationOptions: {
             tabBarLabel:'Home'
         },
+        screen: Recomendacao
     },
     Busca: {
         screen: Busca,
@@ -20,16 +21,22 @@ export const Tabs = TabNavigator({
             tabBarLabel : 'Buscar'
         }
     },
+    Detalhes: {
+        navigationOptions: {
+            tabBarLabel : 'Detalhes',
+        },
+        screen: Detalhes
+    },
     Adicionados: {
         screen: Adicionados,
         navigationOptions: {
             tabBarLabel : 'Lista'
         },
     },
-    Filme: {
-        screen: Filme,
-        navigationOptions: {
-            tabBarLabel : 'Teste Filme'
-        }
-    },
+    // Filme: {
+    //     screen: Filme,
+    //     navigationOptions: {
+    //         tabBarLabel : 'Teste Filme'
+    //     }
+    // },
 });

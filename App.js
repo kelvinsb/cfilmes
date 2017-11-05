@@ -11,7 +11,7 @@ import { Tabs } from './components/Config/Router';
 export default class App extends Component<{}> {
   render() {
     return (
-      <Tabs />
+      <Tabs/>
     );
   }
 }

@@ -5,7 +5,7 @@ export default class Busca extends Component<{}> {
   constructor(props){
     super(props);
     this.state = {
-      value: this.props.value
+      value: this.props.value,
     }
   }
 
@@ -14,13 +14,8 @@ export default class Busca extends Component<{}> {
   }  
 
   static defaultProps = {
-    value : ''
+    value : '',
   }
-  
-  _onPress = () => {
-    // your code on item press
- };
-
 
   onChangeText(value){
     this.setState({value: value});
@@ -59,17 +54,18 @@ export default class Busca extends Component<{}> {
           data={this.state.data}
           keyExtractor={(x,i) => i}
           renderItem={({ item }) => 
-            <TouchableOpacity onPress={this._onPress}>
-              <Text>
-                <Image
-                style = {styles.image}
-                source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
-                />
+              <View>
+                <TouchableOpacity onPress={this._onPress} onPress={() => this.props.navigation.navigate('Detalhes', {item})} >
+                  <Image
+                  style = {styles.image}
+                  source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
+                  />
+                </TouchableOpacity>
                 <Text style={styles.titulo}>
-                {`\n${item.title}\n`}
+                {`${item.title}\n\n`}
                 </Text>  
 
-                <Text style={styles.sinopse}>
+                {/* <Text style={styles.sinopse}>
                 {`Nota: ${item.vote_average}\n`}
                 </Text>
 
@@ -82,10 +78,9 @@ export default class Busca extends Component<{}> {
                 </Text>
                           
                 <Text style={styles.sinopse}>
-                {` Sinopse: ${item.overview}\n\n\n `}
-                </Text>
-              </Text>
-              </TouchableOpacity>
+                {`Sinopse: ${item.overview}\n\n\n `}
+                </Text> */}
+              </View>
           }
         />
 
@@ -119,7 +114,7 @@ const styles = StyleSheet.create({
   },
   image:
   {
-    width: 1100,
-    height: 1100
+    width: 350,
+    height: 550
   }
 });
