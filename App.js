@@ -6,12 +6,12 @@ import {
   View
 } from 'react-native';
 
-import { Tabs } from './components/Config/Router';
+import Login from './components/Login';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   render() {
     return (
-      <Tabs/>
+      <Login/>
     );
   }
 }
