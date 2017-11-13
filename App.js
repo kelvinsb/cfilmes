@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { View, Text } from 'react-native';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import firebase from 'firebase';
 
-import { Tabs } from './components/Config/Router';
+import reducers from './components/reducers';
+import LoginRouter from './components/Config/LoginRouter';
 
-export default class App extends Component<{}> {
+const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
+class App extends Component {
+  componentWillMount() {
+    // Initialize Firebase
+    const config = {
+      apiKey: "AIzaSyASyIMI63xCVsoF8BlwiA-A-ygWi6Y1GXw",
+      authDomain: "cfilmes-c4c3a.firebaseapp.com",
+      databaseURL: "https://cfilmes-c4c3a.firebaseio.com",
+      storageBucket: "cfilmes-c4c3a.appspot.com",
+      messagingSenderId: "360171182494"
+    };
+    firebase.initializeApp(config);
+  }
+
   render() {
     return (
-      <Tabs/>
+      <Provider store={store}>
+        <LoginRouter />
+      </Provider>
     );
   }
 }
+
+export default App;
