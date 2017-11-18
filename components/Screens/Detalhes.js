@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import firebase from 'firebase'
 
+add = "Adicionar a lista"
+
 export default class Adicionado extends Component<{}> {
     componentWillMount(){
         var database = firebase.database();
@@ -17,9 +19,12 @@ export default class Adicionado extends Component<{}> {
         console.log(item)
         firebase.database().ref(caminho+'/'+item.id).set({
             "imageURL" : item["poster_path"],
+            "titulo" :item["title"],
+            "nota_geral" :item["vote_average"],
             "nota_usuario" : "",
             "comentario_usuario" : "",
         }) 
+        add = "Adicionado"
     }
 
     render() {
@@ -29,7 +34,7 @@ export default class Adicionado extends Component<{}> {
                 <ScrollView style={styles.container}>
                     <TouchableOpacity onPress={()  => this.salvarbd(item)}>
                         <Text>
-                            Adicionar a lista{'\n'} {/*botao para add*/}
+                            {add}
                         </Text>
                     </TouchableOpacity>
                     <Image
