@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import firebase from 'firebase'
 
 export default class Adicionado extends Component<{}> {
+    componentWillMount(){
+        var database = firebase.database();
+        email = firebase.auth().currentUser.email
+        emailsplit = email.split(".")
+        caminho = ""
+        for (i=0; i<emailsplit.length; i++){
+          caminho += emailsplit[i]
+        }
+    }
+    
     onPress(){
-        //mecher com banco aqui
+        console.log(item)
+        firebase.database().ref(caminho+'/'+item.id).set({
+            "imageURL" : item["poster_path"],
+            "nota_usuario" : "",
+            "comentario_usuario" : "",
+        }) 
     }
 
     render() {
@@ -11,11 +27,11 @@ export default class Adicionado extends Component<{}> {
             item = this.props.navigation.state.params.item
             return (
                 <ScrollView style={styles.container}>
-                    <TouchableHighlight onPress={this.onPress}>
+                    <TouchableOpacity onPress={this.onPress(item)}>
                         <Text>
                             Adicionar a lista{'\n'} {/*botao para add*/}
                         </Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Image
                         style = {styles.image}
                         source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
