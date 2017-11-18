@@ -13,7 +13,7 @@ export default class Adicionado extends Component<{}> {
         }
     }
     
-    onPress(){
+    salvarbd(){
         console.log(item)
         firebase.database().ref(caminho+'/'+item.id).set({
             "imageURL" : item["poster_path"],
@@ -27,7 +27,7 @@ export default class Adicionado extends Component<{}> {
             item = this.props.navigation.state.params.item
             return (
                 <ScrollView style={styles.container}>
-                    <TouchableOpacity onPress={this.onPress(item)}>
+                    <TouchableOpacity onPress={()  => this.salvarbd(item)}>
                         <Text>
                             Adicionar a lista{'\n'} {/*botao para add*/}
                         </Text>
