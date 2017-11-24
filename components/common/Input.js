@@ -21,7 +21,7 @@ const Input = ({ label, value, onChangeText, autoCapitalize, secureTextEntry }) 
 const styles = StyleSheet.create({
   inputStyle: {
     fontSize: 20,
-    height: 30,
+    height: 48,
     paddingLeft: 5,
     paddingRight: 5,
     flex: 2
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   containerStyle: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   }
 });
 
