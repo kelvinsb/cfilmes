@@ -31,36 +31,40 @@ export default class Adicionado extends Component<{}> {
         if (this.props.navigation.state.params) {
             item = this.props.navigation.state.params.item
             return (
-                <ScrollView style={styles.container}>
-                    <TouchableOpacity onPress={()  => this.salvarbd(item)}>
-                        <Text>
-                            {add}
-                        </Text>
-                    </TouchableOpacity>
-                    <Image
-                        style = {styles.image}
-                        source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
-                    />
-                    <Text style={styles.titulo}>
-                         {`${item.title}`}
-                    </Text>  
+                <View style={styles.container}>
+                    <ScrollView style={styles.containerScroll}>
+                        <View style={styles.containerIn}>
+                            <TouchableOpacity onPress={()  => this.salvarbd(item)}>
+                                <Text>
+                                    {add}
+                                </Text>
+                            </TouchableOpacity>
+                            <Image
+                                style = {styles.image}
+                                source={{uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
+                            />
+                            <Text style={styles.titulo}>
+                                {`${item.title}`}
+                            </Text>  
 
-                    <Text style={styles.sinopse}>
-                         {`Nota: ${item.vote_average}`}
-                    </Text>
+                            <Text style={styles.texto}>
+                                {`Nota: ${item.vote_average}`}
+                            </Text>
 
-                    <Text style={styles.sinopse}>
-                        {`Titulo Original: ${item.original_title}`}
-                    </Text>
+                            <Text style={styles.texto}>
+                                {`Titulo Original: ${item.original_title}`}
+                            </Text>
 
-                    <Text style={styles.sinopse}>
-                        {`Data de lancamento: ${item.release_date}\n`}
-                    </Text>
-                            
-                    <Text style={styles.sinopse}>
-                        {`Sinopse: ${item.overview}`}
-                    </Text>
-                </ScrollView>
+                            <Text style={styles.texto}>
+                                {`Data de lancamento: ${item.release_date}\n`}
+                            </Text>
+                                    
+                            <Text style={styles.sinopse}>
+                                {`Sinopse: ${item.overview}`}
+                            </Text>
+                        </View>
+                    </ScrollView>
+                </View>
             );
         } else {
             return (
@@ -73,9 +77,19 @@ export default class Adicionado extends Component<{}> {
   const styles = StyleSheet.create({
     container: {
         flex:1,
+        backgroundColor: '#f4f4f4',
+    },
+    containerIn: {
+        flex:1,
+        flexDirection: "column",
+        backgroundColor: '#f4f4f4',
+        height: "100%"
+    },
+    containerScroll: {
+        flex:1,
         padding:20,
         backgroundColor: '#f4f4f4',
-        marginTop:1
+        marginTop:1,
     },
     titulo:
     {
@@ -84,8 +98,17 @@ export default class Adicionado extends Component<{}> {
       fontWeight: 'bold',
       fontSize: 20,
       textAlign: 'center',
+      color: "#000000"
     },
     sinopse:
+    {
+      flex: 1,
+      flexDirection: 'row',
+      fontSize: 15,
+      textAlign: 'left',
+      paddingBottom: 35
+    },
+    texto:
     {
       flex: 1,
       flexDirection: 'row',

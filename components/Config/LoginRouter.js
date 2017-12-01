@@ -9,7 +9,7 @@ const RouterComponent = () => {
     <Router sceneStyle={{ paddingTop: 1 }}>
       <Stack key="root">
         <Scene key='login' component={LoginForm} title='Login' initial />
-        <Scene key='main' component={Main} title='Main' />
+        <Scene key='main' component={Main} title='cFilmes' />
       </Stack>
     </Router>
   );
