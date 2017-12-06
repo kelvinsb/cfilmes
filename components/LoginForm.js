@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Button, Input, Spinner } from './common';
@@ -25,7 +25,7 @@ class LoginForm extends Component {
   renderMessage() {
     if (this.props.error) {
       return (
-        <Text style={{ color: 'red' }}>
+        <Text style={{ color: 'red', paddingBottom: 15, alignSelf: 'center' }}>
           {this.props.error}
         </Text>
       );
@@ -60,7 +60,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <View>
+      <View style={this.container}>
         <Input
           label='Email'
           value={this.props.email}
@@ -103,3 +103,11 @@ export default connect(
     registerUser
   }
 )(LoginForm);
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+    paddingTop: 50,
+    backgroundColor: "#000000",
+  }
+});

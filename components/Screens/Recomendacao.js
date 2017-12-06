@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
       flex:1,
       justifyContent:'center',
-      padding:10,
+      padding:5,
       backgroundColor: '#f4f4f4',
       marginTop:3
   },
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     fontWeight: 'bold',
+    paddingTop: 10,
+    color: "#000000",
     fontSize: 20,
     textAlign: 'center',
   },
