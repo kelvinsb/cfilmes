@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image, ListView } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image, ListView, Button} from 'react-native';
 import firebase from 'firebase'
 import db from '../Main'
 
@@ -7,128 +7,104 @@ export default class Adicionado extends Component<{}> {
   state = {
     data: []
   }
+  constructor(props){
+    super(props);
 
-  lerbd = async () => {
     var database = firebase.database();
-    email = firebase.auth().currentUser.email
-    emailsplit = email.split(".")
-    caminho = ""
-    for (i=0; i<emailsplit.length; i++){
-      caminho += emailsplit[i]
-    }
+    caminho = firebase.auth().currentUser.uid + "/" + "assistidos" + "/"
 
-    // this.dataRef = firebase.database().ref(caminho)
-    await firebase.database().ref(caminho).child('346364').on("value", snapshot => {
-      this.setState({data: snapshot.val()})
-      // snapshot.forEach((idfilme) => {
-      //   idfilme.forEach((child) =>{
-      //     this.state.data.push({
-      //       nota_usuario: child.val(),
-      //       key: child.key
-      //     })
-      //   })
-        
-      // });
-    })
+    this.itemAtual = database.ref(caminho);
+    this.state = { filmes: [], modalVisible: false,};
+  }
+  verificarFilmesAdicionados(itemAtual) {
+    itemAtual.on('value', (snap) => {
+      var items = [];
+      snap.forEach((child) => {
+        items.push({
+          id: child.key,
+          comentario_usuario: child.val().comentario_usuario,
+          imageUrl: child.val().imageURL,
+          nota_geral: child.val().nota_geral,
+          nota_usuario: child.val().nota_usuario,
+          sinopse: child.val().sinopse,
+          data_adicionado: "Adicionado em: " + child.val().data_adicionado,
+          titulo: child.val().titulo,
+        });
+      });
+  
+      this.setState({filmes: items });
+    });
+  }
+  removerFilme(oCaminho){
+    aDeletar = caminho + oCaminho
+    firebase.database().ref(aDeletar).remove()
+    /*firebase.database().ref(caminho+'/'+item.id).set({
+      "imageURL" : item["poster_path"],
+      "titulo" :item["title"],
+      "nota_geral" :item["vote_average"],
+      "nota_usuario" : "",
+      "comentario_usuario" : "",
+      "sinopse" :item["overview"],
+      "data_adicionado" : dataAtual,
+  }) */
   }
 
-  // onpress(){
-  //   console.log(this.state.data)
-  // }
-  // exibir(){
-  //   <View style={styles.container}>
-  //       {console.log("geral: ", this.state.data)}
-  //       <Image
-  //           style = {styles.image}
-  //           source={{uri: `https://image.tmdb.org/t/p/w500${this.state.data.imageURL}`}}
-  //       />
-  //       <Text style={styles.titulo}>
-  //         {`${this.state.data.comentario_usuario}`}
-  //       </Text>
-  //       <Text style={styles.titulo}>
-  //         {`${this.state.data.nota_geral}`}
-  //       </Text>
-  //       <Text style={styles.titulo}>
-  //         {`${this.state.data.titulo}`}
-  //       </Text>
-  //   </View>
-  // }
+  keyExtractor = (item) => item.id;
+  renderItem = ({item}) =>
+  <View style={styles.contItem}>
+    <View style={styles.vImage}>
+      <View style={styles.imageT}>
+        <Button
+            title="Remover"
+            onPress = {() => this.removerFilme(item.id)}
+          />
+        <Image
+            style = {styles.image}
+            source={{uri: `https://image.tmdb.org/t/p/w500${item.imageUrl}`}}
+        />
+      </View>
+    </View>
+    <View style={styles.filmeInfos}>
+      <Text style={styles.titulo}>
+          {`${item.titulo}`}
+        </Text>
+      <Text style={styles.texto}>
+        {`${item.nota_geral}`}
+      </Text>
+      <Text style={styles.texto}>
+        {`${item.data_adicionado}`}
+      </Text>
+      <Text style={styles.coment}>
+        {`${item.sinopse}`}
+      </Text>
+    </View>
+  </View>;
+
+  componentDidMount() {
+    this.verificarFilmesAdicionados(this.itemAtual);
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.contItem}>
-          {console.log("geral: ", this.state.data)}
-          <View style={styles.vImage}>
-            <Image
-                style = {styles.image}
-                source={{uri: `https://image.tmdb.org/t/p/w500${this.state.data.imageURL}`}}
+          <FlatList
+            data = {this.state.filmes}
+            keyExtractor = {this.keyExtractor}
+            renderItem = {this.renderItem}
+            style={{marginTop: 20}}
             />
-          </View>
-          <View style={styles.filmeInfos}>
-            <Text style={styles.titulo}>
-              {`${this.state.data.nota_geral}`}
-            </Text>
-            <Text style={styles.titulo}>
-              {`${this.state.data.titulo}`}
-            </Text>
-            <Text style={styles.coment}>
-              {`${this.state.data.comentario_usuario}`}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.contItem}>
-          {console.log("geral: ", this.state.data)}
-          <View style={styles.vImage}>
-            <Image
-                style = {styles.image}
-                source={{uri: `https://image.tmdb.org/t/p/w500/oSLd5GYGsiGgzDPKTwQh7wamO8t.jpg`}}
-            />
-          </View>
-          <View style={styles.filmeInfos}>
-            <Text style={styles.titulo}>
-              7.5
-            </Text>
-            <Text style={styles.titulo}>
-              Thor: Ragnarok
-            </Text>
-            <Text style={styles.coment}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Text>
-          </View>
-        </View>
       </View>
-
-      // <View>
-      //   <ListView
-      //     dataSource={this.state.dataSource}
-      //     renderRow={(rowData) => 
-      //       <Text>{rowData.nota_usuario}</Text>
-      //     }
-      //   />
-      //   {this.onpress2}
-      // </View>
-
-      // <View style={styles.container}>
-      //   {this.exibir()}
-      // </View>
-
-      // <View>
-      //   {this.onpress()}
-      //   <TouchableOpacity onPress={()  => this.onpress()}>
-      //     <Text> Lista de filmes adicionados </Text>
-      //   </TouchableOpacity>
-      // </View>
-    );
+    )
   }
-
-  componentWillMount = async () => {
-    this.lerbd()
-  }
-
 }
 
 const styles = StyleSheet.create({
+  listcontainer: {
+    flex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
   container: {
       flex:1,
       flexDirection: "column",
@@ -137,13 +113,18 @@ const styles = StyleSheet.create({
       padding:10,
       backgroundColor: '#f4f4f4',
   },
+  contHeader: {
+    flex:1,
+    flexDirection: "column",
+    justifyContent:'center',
+  },
   contItem: {
     flex:1,
     flexDirection: "row",
     padding:10,
     backgroundColor: '#f4f4f4',
     marginTop:3
-},
+  },
   titulo:
   {
     flex: 1,
@@ -151,6 +132,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     justifyContent:'center',
+    textAlign: 'center',
+  },
+  texto:
+  {
+    flex: 1,
+    flexDirection: 'row',
+    fontWeight: 'bold',
+    fontSize: 16,
+    justifyContent:'center',
+    textAlign: 'center',
   },
   coment:
   {
@@ -167,6 +158,11 @@ const styles = StyleSheet.create({
   vImage: {
     flex: 1,
     flexDirection: "row",
+    marginRight: 5,
+  },
+  imageT: {
+    flex: 1,
+    flexDirection: "column",
   },
   filmeInfos: {
     flex: 1,

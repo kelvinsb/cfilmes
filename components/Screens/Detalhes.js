@@ -1,32 +1,40 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity, Button} from 'react-native';
 import firebase from 'firebase'
 
-add = "Adicionar a lista"
-
 export default class Adicionado extends Component<{}> {
+    constructor(){
+        super()
+
+        this.state = {
+            textoADicionar: "Adicionar"
+        }
+    }
+
     componentWillMount(){
         var database = firebase.database();
-        email = firebase.auth().currentUser.email
-        emailsplit = email.split(".")
-        caminho = ""
-        for (i=0; i<emailsplit.length; i++){
-          caminho += emailsplit[i]
-        }
+        caminho = firebase.auth().currentUser.uid + "/" + "assistidos" + "/"
+
     }
     
     salvarbd(){
         console.log(item)
+        dateAtual = new Date();
+        dataAtual = dateAtual.getDate() + "/" + (dateAtual.getMonth()+1) + "/" + dateAtual.getFullYear();
         firebase.database().ref(caminho+'/'+item.id).set({
             "imageURL" : item["poster_path"],
             "titulo" :item["title"],
             "nota_geral" :item["vote_average"],
             "nota_usuario" : "",
             "comentario_usuario" : "",
+            "sinopse" :item["overview"],
+            "data_adicionado" : dataAtual,
         }) 
-        add = "Adicionado"
+        this.atualizarAdicionar()
     }
-
+    atualizarAdicionar = () => {
+        this.setState({textoADicionar: "Adicionado"})
+    }
     render() {
         if (this.props.navigation.state.params) {
             item = this.props.navigation.state.params.item
@@ -35,8 +43,8 @@ export default class Adicionado extends Component<{}> {
                     <ScrollView style={styles.containerScroll}>
                         <View style={styles.containerIn}>
                             <TouchableOpacity onPress={()  => this.salvarbd(item)}>
-                                <Text style={styles.botaoAdicionar}>
-                                    {add}
+                            <Text style={styles.botaoAdicionar}>
+                                    {this.state.textoADicionar}
                                 </Text>
                             </TouchableOpacity>
                             <Image
@@ -48,19 +56,19 @@ export default class Adicionado extends Component<{}> {
                             </Text>  
 
                             <Text style={styles.texto}>
-                                {`Nota: ${item.vote_average}`}
+                                <Text style={styles.textoNegrito}>Nota: </Text>{`${item.vote_average}`}
                             </Text>
 
                             <Text style={styles.texto}>
-                                {`Titulo Original: ${item.original_title}`}
+                                <Text style={styles.textoNegrito}>Titulo Original: </Text>{`${item.original_title}`}
                             </Text>
 
                             <Text style={styles.texto}>
-                                {`Data de lancamento: ${item.release_date}\n`}
+                                <Text style={styles.textoNegrito}>Data de lançamento: </Text>{`${item.release_date}\n`}
                             </Text>
                                     
                             <Text style={styles.sinopse}>
-                                {`Sinopse: ${item.overview}`}
+                                <Text style={styles.textoNegrito}>Sinopse :</Text>{`${item.overview}`}
                             </Text>
                         </View>
                     </ScrollView>
@@ -92,6 +100,11 @@ export default class Adicionado extends Component<{}> {
         flexDirection: "row",
         textAlign: 'center',
     },
+    botaoAdd :
+    {
+        padding: 5,
+        margin: 5,
+    },
     containerIn: {
         flex:1,
         flexDirection: "column",
@@ -117,19 +130,29 @@ export default class Adicionado extends Component<{}> {
     {
       flex: 1,
       flexDirection: 'row',
-      fontSize: 15,
+      fontSize: 16,
       textAlign: 'left',
-      paddingBottom: 35
+      paddingBottom: 35,
+      color: "#000000",
     },
     texto:
     {
       flex: 1,
       flexDirection: 'row',
-      fontSize: 15,
+      fontSize: 16,
       textAlign: 'left',
+      color: "#000000",
+    },
+    textoNegrito:
+    {
+      fontSize: 16,
+      textAlign: 'left',
+      fontWeight: 'bold',
+      color: "#000000",
     },
     image:
     {
+      marginTop: 10,
       width: 350,
       height: 600
     }

@@ -8,7 +8,7 @@ Para inicializar o projeto para android:
 1. Abra um terminal na pasta do projeto e digite: ```npm start``` 
 2. Com outro terminal:  
     - Para executar no emulador: ```react-native run-android``` 
-    - Para executar no seu dispositivo android, tem que habilitar o modo desenvolvedor no celular e permitir instalação via usb. E no terminal digitar: adb devices ; Copiar o id do seu celular e digitar: ```react-native run-android -deviceId IdDoCelular```  
+    - Para executar no seu dispositivo android, tem que habilitar o modo desenvolvedor no celular e permitir instalação via usb. E no terminal digitar: ```adb devices```  ; Copiar o id do seu celular e digitar: ```react-native run-android -deviceId IdDoCelular```  
 
 **Dependências:**
 Para o criador do projeto: FireBase  
