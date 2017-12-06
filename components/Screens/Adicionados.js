@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image, ListView, Button} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList, Image, ListView, Button, ToastAndroid} from 'react-native';
 import firebase from 'firebase'
 import db from '../Main'
 
@@ -35,18 +35,10 @@ export default class Adicionado extends Component<{}> {
       this.setState({filmes: items });
     });
   }
-  removerFilme(oCaminho){
+  removerFilme(oCaminho, nomeFilme){
     aDeletar = caminho + oCaminho
     firebase.database().ref(aDeletar).remove()
-    /*firebase.database().ref(caminho+'/'+item.id).set({
-      "imageURL" : item["poster_path"],
-      "titulo" :item["title"],
-      "nota_geral" :item["vote_average"],
-      "nota_usuario" : "",
-      "comentario_usuario" : "",
-      "sinopse" :item["overview"],
-      "data_adicionado" : dataAtual,
-  }) */
+    ToastAndroid.show(nomeFilme + " removido com sucesso", ToastAndroid.SHORT);
   }
 
   keyExtractor = (item) => item.id;
@@ -56,7 +48,7 @@ export default class Adicionado extends Component<{}> {
       <View style={styles.imageT}>
         <Button
             title="Remover"
-            onPress = {() => this.removerFilme(item.id)}
+            onPress = {() => this.removerFilme(item.id, item.titulo)}
           />
         <Image
             style = {styles.image}

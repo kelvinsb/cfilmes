@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity, Button} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity, Button, ToastAndroid} from 'react-native';
 import firebase from 'firebase'
 
 export default class Adicionado extends Component<{}> {
@@ -17,7 +17,7 @@ export default class Adicionado extends Component<{}> {
 
     }
     
-    salvarbd(){
+    salvarbd(item, nomeFilme){
         console.log(item)
         dateAtual = new Date();
         dataAtual = dateAtual.getDate() + "/" + (dateAtual.getMonth()+1) + "/" + dateAtual.getFullYear();
@@ -31,6 +31,7 @@ export default class Adicionado extends Component<{}> {
             "data_adicionado" : dataAtual,
         }) 
         this.atualizarAdicionar()
+        ToastAndroid.show(nomeFilme + " adicionado com sucesso", ToastAndroid.SHORT);
     }
     atualizarAdicionar = () => {
         this.setState({textoADicionar: "Adicionado"})
@@ -42,7 +43,7 @@ export default class Adicionado extends Component<{}> {
                 <View style={styles.container}>
                     <ScrollView style={styles.containerScroll}>
                         <View style={styles.containerIn}>
-                            <TouchableOpacity onPress={()  => this.salvarbd(item)}>
+                            <TouchableOpacity onPress={()  => this.salvarbd(item, item.title)}>
                             <Text style={styles.botaoAdicionar}>
                                     {this.state.textoADicionar}
                                 </Text>
