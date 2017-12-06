@@ -35,7 +35,11 @@ export default class Adicionado extends Component<{}> {
                     <ScrollView style={styles.containerScroll}>
                         <View style={styles.containerIn}>
                             <TouchableOpacity onPress={()  => this.salvarbd(item)}>
+<<<<<<< HEAD
                                 <Text style={styles.botaoAdicionar}>
+=======
+                                <Text>
+>>>>>>> 38543624d87bdddec5dc8335c2c435d91113a33d
                                     {add}
                                 </Text>
                             </TouchableOpacity>
@@ -79,6 +83,7 @@ export default class Adicionado extends Component<{}> {
         flex:1,
         backgroundColor: '#f4f4f4',
     },
+<<<<<<< HEAD
     botaoAdicionar :
     {
         borderWidth: 1,
@@ -92,6 +97,8 @@ export default class Adicionado extends Component<{}> {
         flexDirection: "row",
         textAlign: 'center',
     },
+=======
+>>>>>>> 38543624d87bdddec5dc8335c2c435d91113a33d
     containerIn: {
         flex:1,
         flexDirection: "column",
